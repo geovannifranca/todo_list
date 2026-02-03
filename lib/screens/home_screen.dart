@@ -20,7 +20,8 @@ class HomeScreen extends StatelessWidget {
       body: Center(child: Text('Olá Mundo')),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        label: Row(children: [Icon(Icons.add), Text('Nova Tarefa')]),
+        label: Text('Nova Tarefa'),
+        icon: Icon(Icons.add),
       ),
     );
   }
