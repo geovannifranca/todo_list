@@ -11,10 +11,10 @@ class MyApp extends StatelessWidget {
       title: 'Todo List',
 
       theme: ThemeData(
-        colorScheme: ColorScheme.light(primary: Colors.indigo),
-        appBarTheme: AppBarTheme(backgroundColor: Colors.indigo),
+        colorScheme: const ColorScheme.light(primary: Colors.indigo),
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.indigo),
       ),
-      home: const HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }

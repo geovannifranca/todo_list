@@ -1,14 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/models/task.model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<Task> tasksList = [
+    Task(title: 'Reunião 1', description: 'Começa as 16h', isFavorite: true),
+    Task(title: 'Reunião 2', description: 'Começa as 17h'),
+    Task(title: 'Reunião 3', isFavorite: true),
+  ];
+
+  void addTask() {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Adicionar Tarefa',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => setState(() {
+                      Navigator.pop(context);
+                    }),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              TextFormField(),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Tarefas',
           style: TextStyle(
             color: Colors.white,
@@ -17,11 +65,58 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(child: Text('Olá Mundo')),
+      body: Padding(
+        padding: const EdgeInsetsGeometry.all(10.0),
+        child: ListView.separated(
+          itemCount: tasksList.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 4.0),
+          itemBuilder: (_, int index) {
+            Task task = tasksList[index];
+            return Card(
+              elevation: 2.5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              color: Colors.indigo[50],
+              child: ListTile(
+                onTap: () {},
+                leading: Checkbox(
+                  value: task.isCompleted,
+                  onChanged: (value) {
+                    setState(() {
+                      task.isCompleted = value!;
+                    });
+                  },
+                ),
+                title: Text(task.title),
+                subtitle: task.description == null
+                    ? null
+                    : Text(task.description!),
+                trailing: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      task.isFavorite = !task.isFavorite;
+                    });
+                  },
+                  icon: task.isFavorite
+                      ? const Icon(Icons.star, color: Colors.indigo)
+                      : const Icon(
+                          Icons.star_border_outlined,
+                          color: Colors.indigo,
+                        ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text('Nova Tarefa'),
-        icon: Icon(Icons.add),
+        onPressed: addTask,
+        label: const Text('Nova Tarefa'),
+        icon: const Icon(Icons.add),
       ),
     );
   }
