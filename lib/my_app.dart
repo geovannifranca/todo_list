@@ -4,7 +4,6 @@ import 'package:todo_list/screens/home_screen.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.light(primary: Colors.indigo),
         appBarTheme: const AppBarTheme(backgroundColor: Colors.indigo),
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
